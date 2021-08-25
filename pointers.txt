@@ -1,0 +1,631 @@
+/****************************************/
+POINTERS
+
+#include<stdio.h>
+int main()
+{
+int a=10;
+int *ptr= &a;
+printf("Value of a = %d\n",*ptr);
+printf("Address of a = %p\n",ptr);
+*ptr=20;
+printf("*ptr = %d",*ptr);
+return 0;
+}
+OUTPUT:
+Value of a =10
+Address of a = 0*7fff7f742304
+*ptr=20
+
+
+
+Swapping of 2 numbers using pointers
+
+#include<stdio.h>  
+int main(){  
+int a=10,b=20,*p1=&a,*p2=&b,temp;  
+printf("Before swap: *p1=%d *p2=%d\n",*p1,*p2);  
+temp=*p1;  
+*p1=*p2;
+*p2=temp;  
+printf("\nAfter swap: *p1=%d *p2=%d",*p1,*p2);  
+return 0;  
+} 
+OUPUT:
+Before swap: *p1=10 *p2=20
+After swap: *p1=20 *p2=10 
+
+
+
+
+Another way
+
+#include<stdio.h>  
+int main(){  
+int a=10,b=20,*p1=&a,*p2=&b,*temp;  
+printf("Before swap: *p1=%d *p2=%d\n",*p1,*p2);  
+temp=p1;  
+p1=p2;
+p2=temp;  
+printf("\nAfter swap: *p1=%d *p2=%d",*p1,*p2);  
+return 0;  
+} 
+
+OUPUT:
+Before swap: *p1=10 *p2=20
+After swap: *p1=20 *p2=10 
+
+
+INT TO CHAR (TYPE CASTING)   VOID POINTERS
+
+#include<stdio.h>  
+int main(){  
+int a=1025; //1025= 00000000  00000000  00000100  00000001
+p=&a;
+printf("Size of integer =%d " ,sizeof(int));
+printf("Address = %d , value=%d\n", p,*p);
+char *ptr;
+ptr= (char*)p;
+printf("Size of char =%d" ,sizeof(char));
+printf("Address = %d , value=%d\n", ptr,*ptr); 
+printf("Address = %d , value=%d\n", ptr+1,*(ptr+1)); 
+void *ptrvoid;
+ptrvoid=p; //******not need for typecasting , do not dereference void pointers, arithmetic operations are not possible.******//
+printf("Address = %d ", ptrvoid);
+return 0;
+}
+
+OUTPUT:
+Size of integer = 4 Address = 3767320 , value=1025
+Size of char = 1 Address = 3767320 , value=1
+Address = 3767321 , value=4
+Address = 3767320
+
+/****************************************/
+
+
+
+
+/****************************************/
+
+Difference between Arrays and pointers
+
+An array is a collection of elements of similar data type whereas the pointer is a variable that stores the address of another variable. 
+An array size decides the number of variables it can store whereas; a pointer variable can store the address of only one variable in it.
+Arrays can be initialized at the definition, while pointers cannot be initialized at the definition.
+Arrays are static in nature which means once the size of the array is declared, it cannot be resized according to users requirement. Whereas pointers are dynamic in nature, which means the memory allocated can be resized later at any point in time.
+Arrays are allocated at compile time while pointers are allocated at runtime.
+
+#include<stdio.h>  
+int main(){ 
+int A[]={2,4,5,8,1};
+printf("%p",A);
+printf("%p\n",&A[0]);
+printf("%d\n",A[0]);
+printf("%d\n",*A);
+return 0;
+}
+OUTPUT:
+0*7ffe6ff412d0
+0*7ffe6ff412d0
+2
+2
+/****************************************/
+
+
+
+
+
+/****************************************/
+
+CALL BY REFERNCE:
+#include<stdio.h>
+void inc(int *a)
+{
+*a=(*a)+2;
+printf(" Value= %d",a);
+}
+int main()
+{
+int a=2;
+printf(" Value of a before increment= %d",a);
+inc(&a);
+printf(" Value of a after increment= %d",a);
+return 0;
+}
+
+OUTPUT:
+Value of a before increment= 2
+Value of a after increment= 4
+
+/****************************************/
+
+
+
+/****************************************/
+CHAR*  (Char arrays are passed to functions always as refernce)
+
+#include<stdio.h>
+int main()
+{
+char c1[6]="Hello";
+char* c2;
+c2=c1;
+print(c1);
+printf("%c",c2[1]);
+return 0;
+}
+
+void print(char* c)
+{
+while(*c!='\0')
+{
+printf("%c",*c);
+c++;
+}
+printf("\n");
+}
+
+
+OUTPUT:
+Hello
+e
+
+
+/****************************************/
+
+
+
+
+
+/****************************************/
+
+MALLOC
+
+C malloc() method
+The “malloc” or “memory allocation” method in C is used to dynamically allocate a single large block of memory with the specified size. It returns a pointer of type void which can be cast into a pointer of any form. It doesn’t Iniatialize memory at execution time so that it has initializes each block with the default garbage value initially. 
+Syntax: 
+ 
+
+ptr = (cast-type*) malloc(byte-size)
+For Example:
+ptr = (int*) malloc(100 * sizeof(int));
+Since the size of int is 4 bytes, this statement will allocate 400 bytes of memory. And, the pointer ptr holds the address of the first byte in the allocated memory.
+
+If space is insufficient, allocation fails and returns a NULL pointer.
+Example: 
+ 
+
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+ 
+    // This pointer will hold the
+    // base address of the block created
+    int* ptr;
+    int n, i;
+ 
+    // Get the number of elements for the array
+    printf("Enter number of elements:");
+    scanf("%d",&n);
+    printf("Entered number of elements: %d\n", n);
+ 
+    // Dynamically allocate memory using malloc()
+    ptr = (int*)malloc(n * sizeof(int));
+ 
+    // Check if the memory has been successfully
+    // allocated by malloc or not
+    if (ptr == NULL) {
+        printf("Memory not allocated.\n");
+        exit(0);
+    }
+    else {
+ 
+        // Memory has been successfully allocated
+        printf("Memory successfully allocated using malloc.\n");
+ 
+        // Get the elements of the array
+        for (i = 0; i < n; ++i) {
+            ptr[i] = i + 1;
+        }
+ 
+        // Print the elements of the array
+        printf("The elements of the array are: ");
+        for (i = 0; i < n; ++i) {
+            printf("%d, ", ptr[i]);
+        }
+    }
+ 
+    return 0;
+}
+/****************************************/
+
+
+
+
+
+
+/****************************************/
+ACCESSING ARRAYS AS LINKED LIST USING POINTERS
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+ 
+
+struct node {
+    int data;
+    struct node* next;
+};
+ 
+// Function to insert node
+void insert(struct node** root,int data)
+{
+     
+   struct node *ptr = (struct node*) malloc(sizeof(struct node));
+   ptr->data = data;
+if(*root==NULL)
+{
+  
+   ptr->next=NULL;
+    *root=ptr;
+}
+else{
+
+   struct node *temp=*root;
+   while(temp->next!=NULL)
+   {
+       temp=temp->next;
+   }
+   
+   temp->next=ptr;
+   ptr->next=NULL;
+}
+}
+
+ 
+void display(struct node* root)
+{
+    while (root != NULL) {
+        printf("%d ",root->data);
+        root = root->next;
+    }
+}
+
+ 
+struct node *arrayToList(int arr[], int n)
+{
+    struct node *root = NULL;
+    for (int i = 0; i < n; i++)
+    {
+        printf("%p ",&root);
+        insert(&root, arr[i]);
+        
+    }
+   return root;
+}
+ 
+
+int main()
+{
+    int arr[] = { 1, 2, 3, 4, 5 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+    struct node* root = arrayToList(arr, n);
+    display(root);
+    return 0;
+}
+
+/****************************************/
+
+
+
+/****************************************/
+
+TYPEDEF
+
+typedef <existing_name> <alias_name>
+
+
+EXAMPLE (SIMPLE PROGRAM)
+
+#include<stdio.h>
+int main()
+{
+    typedef int alias_name;
+    typedef int array[5];
+    alias_name a,b,c;
+    a=10;
+    b=30;
+    c=a+b;
+    array x={10,20,30,40,50};
+    printf("%d+%d=%d\n",a,b,c);
+    for(int i=0;i<5;i++)
+       printf("arr[%d] = %d\n",i, x[i]);
+    return 0;
+}
+
+EXAMPLE (USING STRUCT)
+
+#include <stdio.h>
+#include <string.h>
+ 
+typedef struct vehicle {
+   char name[50];
+   char brand[50];
+   int number;
+} veh;
+ 
+int main( ) {
+
+   veh Four_wheeler;
+ 
+   strcpy( Four_wheeler.name, "car");
+   strcpy( Four_wheeler.brand, "Hyundai"); 
+   Four_wheeler.number = 100;
+ 
+   printf( "Vehicle Name: %s\n", Four_wheeler.name);
+   printf( "Brand : %s\n", Four_wheeler.brand);  
+   printf( "Number : %d\n", Four_wheeler.number );
+
+   return 0;
+}
+
+/****************************************/
+
+
+
+
+
+/****************************************/
+
+#DEFINE
+
+The #define preprocessor directive is used to define constant or micro substitution
+
+#include <stdio.h>  
+#define PI 3.14  
+void main() {  
+   printf("%f",PI);  
+}  
+
+#define is a C-directive which is also used to define the aliases for various data types similar to typedef but with the following differences 
+typedef is limited to giving symbolic names to types only where as #define can be used to define alias for values as well, q., you can define 1 as ONE etc.
+typedef interpretation is performed by the compiler whereas #define statements are processed by the pre-processor.
+
+/****************************************/
+
+
+
+
+/****************************************/
+struct , struct*
+
+
+#include<stdio.h>
+  
+struct Point
+{
+   int x, y;
+};
+  
+int main()
+{
+   struct Point p1 = {1, 2};
+  
+   // p2 is a pointer to structure p1
+   struct Point *p2 = &p1;
+  
+   // Accessing structure members using structure pointer
+   printf("%d %d", p2->x, p2->y);
+   return 0;
+}
+
+/****************************************/
+
+
+
+
+/****************************************/
+MEMCPY()
+
+
+memcpy() is used to copy a block of memory from a location to another. It is declared in string.h
+
+#include <stdio.h>
+#include <string.h>
+  
+int main ()
+{
+  char str1[] = "Geeks";  
+  char str2[] = "Quiz";  
+  
+  puts("str1 before memcpy ");
+  puts(str1);
+  
+  /* Copies contents of str2 to sr1 */
+  memcpy (str1, str2, sizeof(str2));
+  
+  puts("\nstr1 after memcpy ");
+  puts(str1);
+  
+  return 0;
+}
+/****************************************/
+
+
+/****************************************/
+MEMSET
+
+memset() is used to fill a block of memory with a particular value.
+
+#include <stdio.h>
+#include <string.h>
+  
+int main()
+{
+    char str[50] = "I am Rubavathi from Tamil Nadu";
+    printf("\nBefore memset(): %s\n", str);
+  
+    // Fill 8 characters starting from str[13] with '.'
+    memset(str + 11, '.', 8*sizeof(char));
+  
+    printf("After memset():  %s", str);
+    return 0;
+}
+
+/****************************************/
+
+
+
+/****************************************/
+STRING MANIPULATION
+
+Strings are defined as an array of characters. 
+The difference between a character array and a string is the string is terminated with a special character ‘\0’.
+
+#include<stdio.h>
+#include<string.h>
+void main ()  
+{  
+    char s[20];  //declaring string
+ char ch[7]={'R', 'i', 'b', 'b', 'o', 'n', '\0'};   
+    scanf("%[^\n]s",s);  //Reading string
+   printf("Char array : %s\n",ch);
+    printf("String:  %s\n",s);  //print string
+ printf("Length of string is: %d\n",strlen(ch));  //LENGTH OF A STRING
+strcpy(s,ch); //STRING COPYING
+printf("Copied string : %s\n",s);  
+strcat(s,ch); //STRING CONCATINATION
+printf("Concatinated string : %s\n",s);
+if(strcmp(s,ch)==0) //STRING COMPARE
+printf("Strings are equal");
+else
+printf("Strings are not equal");
+printf("\nReverse String is: %s",strrev(ch)); //STRING REVERSE 
+printf("\nLower String is: %s",strlwr(str));  //TO LOWER STRING
+ printf("\nUpper String is: %s",strupr(s)); //TO UPPER STRING
+  
+}  
+
+I/P: star
+O/P: star
+Char array : Ribbon
+String:  star
+Length of string is: 6
+Copied string : Ribbon
+Concatinated string : RibbonRibbon
+Strings are not equal
+Reverse String is: nobbiR
+Lower String is: ribbonribbon
+Upper String is: RIBBONRIBBON
+/****************************************/
+
+/****************************************/
+Main Differences Between Signed and Unsigned
+1.The main difference between signed and unsigned data types is that the former allows the user to represent both positive and negative numbers, while the latter is used to represent zero and other positive numbers. 
+Negative numbers cannot be represented by unsigned data types. They can be exclusively used for positive integers.
+2.Although similar types of signed and unsigned variables have the same range, the latter represents a larger magnitude of the number than the corresponding signed variable.
+3.A signed data categorization uses a flag sign before the negative numbers it represents. No such flag sign is used by the unsigned data category as it only represents positive numbers.
+4.The two categories also differ in terms of their individual ranges in the context of char. Signed integers range from -128 to 127 in chars, while unsigned integers range from 0 to 255 in chars.
+5.Another difference between the two is the method of identification each uses. 
+The leading bit of a given value is used as a part of the value by the unsigned data category to identify whether the number is positive or negative. 
+Alternatively, signed data types use the leftover bit to make the same identification.
+
+EXAMPLE:
+
+#include <stdio.h>
+int main()
+{
+    signed int a = -10; // can able to hold both +ve and -ve values.
+    unsigned int b = 20;   // can able to store only +ve values.
+    printf("%d %u", a, b);
+    return 0;
+}
+
+/****************************************/
+BITWISE OPERATORS
+
+EXAMPLE
+
+#include <stdio.h>
+int main()
+{
+    // a = 5(00000101), b = 9(00001001)
+    unsigned char a = 5, b = 9;
+ 
+    // The result is 00000001
+    printf("a = %d, b = %d\n", a, b);
+    printf("a&b = %d\n", a & b);              //AND
+ 
+    // The result is 00001101
+    printf("a|b = %d\n", a | b);               //OR
+ 
+    // The result is 00001100
+    printf("a^b = %d\n", a ^ b);              //XOR
+ 
+    // The result is 11111010
+    printf("~a = %d\n", a = ~a);              //NOT
+ 
+    // The result is 00010010
+    printf("b<<1 = %d\n", b << 1);         //LEFT SHIFT
+ 
+    // The result is 00000100
+    printf("b>>1 = %d\n", b >> 1);          //RIGHT SHIFT
+ 
+    return 0;
+}
+
+OUTPUT:
+a = 5, b = 9
+a&b = 1
+a|b = 13
+a^b = 12
+~a = 250
+b<<1 = 18
+b>>1 = 4
+
+
+The left-shift and right-shift operators are equivalent to multiplication and division by 2 respectively
+#include <stdio.h>
+int main()
+{
+    int x = 19;
+    printf("x << 1 = %d\n", x << 1);          //LEFT SHIFT
+    printf("x >> 1 = %d\n", x >> 1);         //RIGHT SHIFT
+    return 0;
+}
+
+Output: 
+x << 1 = 38
+x >> 1 = 9
+
+//FIND ODD OCCURING NUMBER IN AN ARRAY USING BITWISE OPERATOR:
+#include <stdio.h>
+int main(void)
+{
+    int arr[] = { 12, 12, 14, 90, 14, 14, 14 };
+    int n =7,res=0,i;
+    for (i = 0; i < n; i++)
+        res ^= arr[i];   
+    printf("The odd occurring element is %d ",res);
+    return 0;
+}
+
+
+//FIND A NUMBER IS ODD OR EVEN USING BITWISE CHARACTER 
+#include <stdio.h>
+int main()
+{
+    int x = 19;
+    (x & 1) ? printf("Odd") : printf("Even");
+    return 0;
+}
+
+
+/****************************************/
+
+
+
+
