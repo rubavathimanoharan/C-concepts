@@ -522,6 +522,10 @@ Lower String is: ribbonribbon
 Upper String is: RIBBONRIBBON
 /****************************************/
 
+
+
+
+
 /****************************************/
 Main Differences Between Signed and Unsigned
 1.The main difference between signed and unsigned data types is that the former allows the user to represent both positive and negative numbers, while the latter is used to represent zero and other positive numbers. 
@@ -627,5 +631,124 @@ int main()
 /****************************************/
 
 
+
+/****************************************/
+
+LITTLE AND BIG ENDIAN
+
+Little and big endian are two ways of storing multibyte data-types ( int, float, etc). 
+In little endian machines, last byte of binary representation of the multibyte data-type is stored first. 
+In big endian machines, first byte of binary representation of the multibyte data-type is stored first.
+
+EXAMPLE
+PROGRAM TO CHECK THE ENDIANNESS OF A MACHINE 
+
+#include <stdio.h>
+int main() 
+{
+   unsigned int i = 1;
+   char *c = (char*)&i;
+   if (*c)    
+       printf("Little endian");
+   else
+       printf("Big endian");
+   getchar();
+   return 0;
+}
+
+
+PROGRAM TO SWAP THE ENDIANNESS 
+#include <stdio.h>
+
+//Macro to swap the byte
+#define CHANGE_ENDIANNESS(A)   ((((int)(A) & 0xff000000) >> 24) \
+                               | (((int)(A) & 0x00ff0000) >> 8) \
+                               | (((int)(A) & 0x0000ff00) << 8)  \
+                               | (((int)(A) & 0x000000ff) << 24))
+int main()
+{
+    int data  = 0x11223344;
+    int res =0;
+    res = CHANGE_ENDIANNESS(data);
+    printf("0x%x\n",res);
+    return 0;
+}
+
+OUTPUT:
+0x44332211
+
+/****************************************/
+
+
+
+
+/****************************************/
+CONVERTING INT TO STRING USING SPRINTF , STRING TO INT USING ATOI
+
+#include<stdio.h>
+int main() {
+   char str[20];    
+   int number=30;
+   sprintf(str,"%d",number); // int to String
+   printf("String : %s",str);
+   int num=atoi(str); //String to int
+   printf("\nInteger : %d",num);
+   return 0;
+}
+OUTPUT:
+
+String : 30
+Integer : 30
+/****************************************/
+
+
+/****************************************/
+MACROS AND ENUMS
+
+
+
+#include <stdio.h>
+#define M_Working 1
+#define M_Failed 0
+enum state {Working = 1, Failed = 0};
+  
+int main()
+{
+    int current_state=1;
+    int current_state2=0;
+    if(current_state == Working)
+   printf("enum");
+   else
+   printf("Not an enum");
+   
+   printf("\n");
+   
+   if(current_state2== M_Failed)
+   printf("Macro");
+   else
+   printf("Not a macro");
+   return 0;
+}
+
+OUTPUT:
+enum
+Macro
+
+
+DIFFERENCE BETWEEN ENUM AND MACROS:
+Macros:
+Macros can be of any type. Macros can even be any code block containing statements, loops, function calls etc.
+Macros are expanded by the pre-processor before compilation takes place. Compiler will refer error messages in expanded macro to the line where the macro has been called.
+Example: 
+#define WORD unsigned short
+
+
+Enum:-
+Enumeration is a type of integer.
+ Enums follow scope rules.
+ Enum variables are automatically assigned values
+Example: enum { JAN, FEB=2};
+
+/****************************************/
 
 
