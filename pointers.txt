@@ -70,7 +70,7 @@ printf("Size of char =%d" ,sizeof(char));
 printf("Address = %d , value=%d\n", ptr,*ptr); 
 printf("Address = %d , value=%d\n", ptr+1,*(ptr+1)); 
 void *ptrvoid;
-ptrvoid=p; //******not need for typecasting , do not dereference void pointers, arithmetic operations are not possible.******//
+ptrvoid=p; //******no need for typecasting , do not dereference void pointers, arithmetic operations are not possible.******//
 printf("Address = %d ", ptrvoid);
 return 0;
 }
