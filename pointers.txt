@@ -856,5 +856,38 @@ int main()
 
 /****************************************/
 
+#include<stdio.h>
+#include<unistd.h>
+#include<pthread.h>
+pthread_mutex_t locked;
+int a;
+void* mtex_func(){
+pthread_mutex_lock(&locked);
+int i=0;
+a++;
+while(i<3)
+{
+printf("%d", a);
+sleep(3);
+i++;
+}
+printf("Fininshed");
+pthread_mutex_unlock(&locked);
+}
+int main(){
+int a;
+pthread_t th1,th2;
+if(pthread_mutex_init(&locked, NULL)!=0)
+{
+printf("Mutex is not created");
+}
+a=0;
+pthread_create(&th1,NULL,mtex_func, NULL);
+pthread_create(&th2,NULL,mtex_func, NULL);
+pthread_join(th1,NULL);
+pthread_join(th2,NULL);
+return 0;
+}
+
 
 
