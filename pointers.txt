@@ -752,3 +752,75 @@ Example: enum { JAN, FEB=2};
 /****************************************/
 
 
+
+
+#include <stdio.h>
+#include<stdlib.h>
+int main()
+{
+    int **p,i,j,row,col;
+    scanf("%d%d",&row,&col);
+    p=(int**)malloc(sizeof(int*)*row);
+    for(int i=0;i<row;i++)
+    {
+        *(p+i)=(int*)malloc(sizeof(int)*col);
+    }
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+           // scanf("%d",&p[i][j]);
+           scanf("%d",*(p+i)+j);
+        }
+    }
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            printf("%d",*(*(p+i)+j));
+        }
+        printf("\n");
+    }
+}
+
+
+Intialize char* of size 26 populate each charcter with alphabet , swap  5th character  with 19 
+#include <stdio.h>
+int main()
+{
+    int m,n;
+    char *temp;
+    char *s[26]={ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h','i', 'j', 'k', 'l', 'm', 'n', 'o', 'p','r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+    
+          temp=s[5-1];
+            s[5-1]=s[19-1];
+            s[19-1]=temp;
+            for(int i=0;i<26;i++)
+    printf("%c ",s[i]);
+	
+    return 0;
+}
+
+
+#include <stdio.h>
+#include<stdlib.h>
+int main()
+{
+    int m,n;
+    char temp;
+    
+   char* s=(char*)malloc(sizeof(char)*26);
+ 
+   for(int i=0;i<26;i++)
+   {
+       s[i]=i+97;
+   }
+   
+          temp=s[4];
+           s[4]=s[18];
+            s[18]=temp;
+            for(int i=0;i<26;i++)
+    printf("%c ",s[i]);
+	
+    return 0;
+}
